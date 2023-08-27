@@ -20,6 +20,16 @@ payments as (
 ),
 
 -- Logical CTEs
+completed_payments as (
+    select
+        orderid as order_id,
+        max(created) as payment_finalized_date,
+        sum(amount) / 100.0 as total_amount_paid
+    from payments
+    where status <> 'fail'
+    group by 1
+),
+
 -- Final CTE
 -- Simple Select Statment
 
@@ -35,16 +45,7 @@ paid_orders as (
         c.last_name as customer_last_name
     from orders
     left join
-        (
-            select
-                orderid as order_id,
-                max(created) as payment_finalized_date,
-                sum(amount) / 100.0 as total_amount_paid
-            from payments
-            where status <> 'fail'
-            group by 1
-        ) p
-        on orders.id = p.order_id
+        completed_payments as p on orders.id = p.order_id
     left join
         customers as  c
         on orders.user_id = c.id
@@ -61,9 +62,10 @@ customer_orders as (
         orders
         on orders.user_id = c.id
     group by 1
-)
+),
 
-select
+-- final CTE
+final as (select
     p.*,
     row_number() over (order by p.order_id) as transaction_seq,
     row_number() over (
@@ -89,3 +91,8 @@ left outer join
     ) x
     on x.order_id = p.order_id
 order by order_id
+)
+
+-- Simple Select Statement
+
+select * from final
