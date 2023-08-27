@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: stripe
-    database: dbt-tutorial
-    schema: stripe
+    database: kyle-test-384716
+    schema: dbt_kzhikechen
     tables:
-      - name: payment
+      - name: stripe_payments

@@ -3,10 +3,10 @@ version: 2
 sources:
   - name: jaffle_shop
     description: A clone of a Postgres application database.
-    database: dbt-tutorial
-    schema: jaffle_shop
+    database: kyle-test-384716
+    schema: dbt_kzhikechen
     tables:
-      - name: customers
+      - name: jaffle_shop_customers
         description: Raw customers data.
         columns:
           - name: id
@@ -16,7 +16,7 @@ sources:
               - not_null
                   
 
-      - name: orders
+      - name: jaffle_shop_orders
         description: Raw orders data.
         loaded_at_field: _etl_loaded_at
         freshness: 
