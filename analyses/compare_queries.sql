@@ -7,3 +7,6 @@ audit_helper.compare_relations(
         b_relation=dbt_relation,
         primary_key="order_id"
     ) }}
+
+
+select * from {{ ref('all_dates') }}
