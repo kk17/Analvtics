@@ -10,3 +10,12 @@ audit_helper.compare_relations(
 
 
 select * from {{ ref('all_dates') }}
+
+
+{{ target.name }}
+{{ target.type }}
+{{ target.role }}
+
+{{ target }}
+
+{{ union_tables_by_prefix('all_data')}}
